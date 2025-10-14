@@ -49,10 +49,20 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     local_key = entry.data.get("local_key")
 
     # Cache credentials globally for decryptor lookup
-    hass.data.setdefault(f"{DOMAIN}_credentials", {})[normalized_address] = {
-        "device_id": device_id,
-        "local_key": local_key,
+    credentials = {
+        "device_id": device_id or "",
+        "local_key": local_key or "",
+        "product_id": entry.data.get("product_id", "") or "",
+        "product_model": entry.data.get("product_model", "") or "",
+        "product_name": entry.data.get("product_name", "") or entry.title,
+        "device_name": entry.title,
+        "category": entry.data.get("category", "") or "",
+        "uuid": entry.data.get("uuid", "") or "",
     }
+    credential_store = hass.data.setdefault(f"{DOMAIN}_credentials", {})
+    credential_store[normalized_address] = credentials
+    credential_store[colon_mac.lower()] = credentials
+    credential_store[colon_mac.upper()] = credentials
 
     ble_device = bluetooth.async_ble_device_from_address(
         hass, colon_mac, True
@@ -67,6 +77,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             ) from ex
 
     device = TuyaBLEDevice(None, ble_device)
+    device._hass = hass  # type: ignore[attr-defined]
+    device.apply_credentials(credentials, normalized_address)
 
     product_info = get_device_product_info(device)
     if product_info is None:

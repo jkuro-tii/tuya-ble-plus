@@ -257,6 +257,33 @@ class TuyaBLEDevice:
 
         self._datapoints = TuyaBLEDataPoints(self)
 
+    def apply_credentials(
+        self,
+        creds: dict[str, str],
+        address: str | None = None,
+    ) -> None:
+        """Apply credential metadata obtained from Home Assistant."""
+
+        resolved_address = address or creds.get("address") or ""
+        if not resolved_address and self._ble_device is not None:
+            resolved_address = self._ble_device.address
+
+        self._device_info = TuyaBLEDeviceCredentials(
+            address=resolved_address or "",
+            device_id=creds.get("device_id", ""),
+            local_key=creds.get("local_key", ""),
+            category=creds.get("category") or None,
+            product_id=creds.get("product_id") or None,
+            device_name=creds.get("device_name") or None,
+            uuid=creds.get("uuid") or None,
+            product_model=creds.get("product_model") or None,
+            product_name=creds.get("product_name") or None,
+        )
+
+        if self._device_info.local_key:
+            self._local_key = self._device_info.local_key.encode()
+            self._login_key = hashlib.md5(self._local_key).digest()
+
     def set_ble_device_and_advertisement_data(
         self, ble_device: BLEDevice, advertisement_data: AdvertisementData
     ) -> None:
@@ -300,16 +327,29 @@ class TuyaBLEDevice:
             if not hasattr(self, "_hass") or not getattr(self._hass, "data", None):
                 return False
 
-            creds = self._hass.data.get(f"{DOMAIN}_credentials", {}).get(self.address)
+            credential_store = self._hass.data.get(f"{DOMAIN}_credentials", {})
+            lookup_keys = [
+                self.address,
+                self.address.lower(),
+                self.address.replace(":", "").lower(),
+            ]
+            creds: dict[str, str] | None = None
+            for key in lookup_keys:
+                creds = credential_store.get(key)
+                if creds:
+                    break
 
             if creds:
                 self._device_info = TuyaBLEDeviceCredentials(
                     address=self.address,
-                    device_id=creds["device_id"],
-                    local_key=creds["local_key"],
-                    category="",  # fill if known
-                    product_id="",  # fill if known
-                    device_name="Custom Local BLE",
+                    device_id=creds.get("device_id", ""),
+                    local_key=creds.get("local_key", ""),
+                    category=creds.get("category") or None,
+                    product_id=creds.get("product_id") or None,
+                    device_name=creds.get("device_name") or "Tuya BLE Plus",
+                    uuid=creds.get("uuid") or None,
+                    product_model=creds.get("product_model") or None,
+                    product_name=creds.get("product_name") or None,
                 )
 
         if self._device_info:
