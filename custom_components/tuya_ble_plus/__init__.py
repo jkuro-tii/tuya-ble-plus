@@ -58,6 +58,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         "device_name": entry.title,
         "category": entry.data.get("category", "") or "",
         "uuid": entry.data.get("uuid", "") or "",
+        "address": normalized_address,
     }
     credential_store = hass.data.setdefault(f"{DOMAIN}_credentials", {})
     credential_store[normalized_address] = credentials

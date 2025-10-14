@@ -390,7 +390,11 @@ class TuyaBLEDevice:
     @property
     def address(self) -> str:
         """Return the address."""
-        return self._ble_device.address
+        if self._ble_device is not None and getattr(self._ble_device, "address", None):
+            return self._ble_device.address
+        if self._device_info is not None and self._device_info.address:
+            return self._device_info.address
+        return ""
 
     @property
     def name(self) -> str:
