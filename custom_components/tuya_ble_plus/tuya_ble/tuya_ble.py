@@ -385,7 +385,8 @@ class TuyaBLEDevice:
                         key = hashlib.md5(raw_product_id).digest()
                         cipher = AES.new(key, AES.MODE_CBC, key)
                         raw_uuid = cipher.decrypt(raw_uuid)
-                        self._uuid = raw_uuid.decode("utf-8")
+                        #self._uuid = raw_uuid.decode("utf-8")
+                        self._uuid = raw_uuid
 
     @property
     def address(self) -> str:

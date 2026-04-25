@@ -7,12 +7,12 @@ _LOGGER.warning("💡 Tuya BLE Plus __init__.py loaded successfully")
 
 from bleak_retry_connector import BLEAK_RETRY_EXCEPTIONS as BLEAK_EXCEPTIONS, get_device
 
-from homeassistant.components import bluetooth
-from homeassistant.components.bluetooth.match import ADDRESS, BluetoothCallbackMatcher
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import CONF_ADDRESS, EVENT_HOMEASSISTANT_STOP, Platform
-from homeassistant.core import Event, HomeAssistant, callback
-from homeassistant.exceptions import ConfigEntryNotReady
+# from homeassistant.components import bluetooth
+# from homeassistant.components.bluetooth.match import ADDRESS, BluetoothCallbackMatcher
+# from homeassistant.config_entries import ConfigEntry
+# from homeassistant.const import CONF_ADDRESS, EVENT_HOMEASSISTANT_STOP, Platform
+# from homeassistant.core import Event, HomeAssistant, callback
+# from homeassistant.exceptions import ConfigEntryNotReady
 
 from .tuya_ble import TuyaBLEDevice
 from .const import DOMAIN

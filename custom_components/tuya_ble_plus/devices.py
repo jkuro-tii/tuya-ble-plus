@@ -3,22 +3,22 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 import logging
-from homeassistant.const import CONF_ADDRESS, CONF_DEVICE_ID
+# from homeassistant.const import CONF_ADDRESS, CONF_DEVICE_ID
 
-from homeassistant.core import CALLBACK_TYPE, HomeAssistant, callback
-from homeassistant.helpers import device_registry as dr
-from homeassistant.helpers.entity import (
-    DeviceInfo,
-    EntityDescription,
-    generate_entity_id,
-)
-from homeassistant.helpers.event import async_call_later
-from homeassistant.helpers.update_coordinator import (
-    CoordinatorEntity,
-    DataUpdateCoordinator,
-)
+# from homeassistant.core import CALLBACK_TYPE, HomeAssistant, callback
+# from homeassistant.helpers import device_registry as dr
+# from homeassistant.helpers.entity import (
+#     DeviceInfo,
+#     EntityDescription,
+#     generate_entity_id,
+# )
+# from homeassistant.helpers.event import async_call_later
+# from homeassistant.helpers.update_coordinator import (
+#     CoordinatorEntity,
+#     DataUpdateCoordinator,
+# )
 
-from home_assistant_bluetooth import BluetoothServiceInfoBleak
+# from home_assistant_bluetooth import BluetoothServiceInfoBleak
 from .tuya_ble import (
     TuyaBLEDataPoint,
     TuyaBLEDevice,
