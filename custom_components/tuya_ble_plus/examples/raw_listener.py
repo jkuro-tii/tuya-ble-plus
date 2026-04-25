@@ -13,7 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from tuya_ble.tuya_ble import TuyaBLEDevice
 
 
-SCAN_TIMEOUT = 5.0
+SCAN_TIMEOUT = 120.0
 
 DEVICE_CONFIGS = [
     {
@@ -31,21 +31,82 @@ DEVICE_CONFIGS = [
             "product_name": "",
         },
     },
-    {
-        "label": "T&H_2",
-        "name_hint": "T & H Sensor 2",
-        "creds": {
-            "address": "38:A5:C9:BC:C2:BC",
-            "device_id": "bf1441cdae678f19c18ams",
-            "local_key": "}m/c!(Mw]Ww<7nL7",
-            "uuid": "80f5d49ad980e856",
-            "device_name": "T&H Sensor 2",
-            "category": "",
-            "product_id": "",
-            "product_model": "",
-            "product_name": "",
-        },
-    },
+    # {
+    #     "label": "T&H_2",
+    #     "name_hint": "T & H Sensor 2",
+    #     "creds": {
+    #         "address": "38:A5:C9:BC:C2:BC",
+    #         "device_id": "bf1441cdae678f19c18ams",
+    #         "local_key": "}m/c!(Mw]Ww<7nL7",
+    #         "uuid": "80f5d49ad980e856",
+    #         "device_name": "T&H Sensor 2",
+    #         "category": "",
+    #         "product_id": "",
+    #         "product_model": "",
+    #         "product_name": "",
+    #     },
+    # }
+    # ,
+    # {
+    #     "label": "4-443",
+    #     "name_hint": "4-443",
+    #     "creds": {
+    #         "address": "3C:0B:59:9D:17:3D",
+    #         "device_id": "bf0ea1e2568235c4b9v9w9",
+    #         "local_key": "VWhSB_SR]p;ZUz5:",
+    #         "uuid": "6176fa88e513a030",
+    #         "device_name": "4-443",
+    #         "category": "",
+    #         "product_id": "",
+    #         "product_model": "",
+    #         "product_name": "",
+    #     },
+    # }
+    # {
+    #     "label": "Fan socket",
+    #     "name_hint": "Fan Socket",
+    #     "creds": {
+    #         "address": "FC:67:1F:7E:C4:7C",
+    #         "device_id": "bf299a752211936eaaa9er",
+    #         "local_key": "zUJK5i(5{J=(>1Uz",
+    #         "uuid": "98b6d6d54c9f7963",
+    #         "device_name": "Fan Socket",
+    #         "category": "",
+    #         "product_id": "",
+    #         "product_model": "",
+    #         "product_name": "",
+    #     },
+    # }
+    # {
+    #     "label": "Temp_sensor",
+    #     "name_hint": "Temp_sensor",
+    #     "creds": {
+    #         "address": "FC:67:1F:7E:7B:F3",
+    #         "device_id": "bfa312ccedeea8d29cl9hb",
+    #         "local_key": "+$.!ch.xlFJ<[?5$",
+    #         "uuid": "c681e4a6d2ed6695",
+    #         "device_name": "Temp_sensor",
+    #         "category": "",
+    #         "product_id": "",
+    #         "product_model": "",
+    #         "product_name": "",
+    #     },
+    # }
+    # {
+    #     "label": "RPi_sensor",
+    #     "name_hint": "RPi_sensor",
+    #     "creds": {
+    #         "address": "3C:0B:59:01:FD:C7",
+    #         "device_id": "bfcf265f2c4afce354ae7x",
+    #         "local_key": "}xi$4N7JaCM_'|u|",
+    #         "uuid": "1a3d14645cece858",
+    #         "device_name": "RPi_sensor",
+    #         "category": "",
+    #         "product_id": "",
+    #         "product_model": "",
+    #         "product_name": "",
+    #     },  
+    # }
 ]
 
 
@@ -147,7 +208,7 @@ async def run_device(config: dict, ble_device: BLEDevice) -> None:
 
 
 async def main() -> None:
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.DEBUG)
 
     matched = await wait_for_all_devices()
     tasks = [
