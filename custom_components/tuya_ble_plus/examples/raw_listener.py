@@ -51,7 +51,7 @@ DEVICE_CONFIGS = [
     #     "label": "4-443",
     #     "name_hint": "4-443",
     #     "creds": {
-    #         "address": "3C:0B:59:9D:17:3D",
+    #         "address": "3C:0B:59:9D:17:3F",
     #         "device_id": "bf0ea1e2568235c4b9v9w9",
     #         "local_key": "VWhSB_SR]p;ZUz5:",
     #         "uuid": "6176fa88e513a030",
